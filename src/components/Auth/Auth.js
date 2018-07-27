@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import {withRouter} from 'react-router'
+import {connect} from 'react-redux';
+import {updateUser} from '../../ducks/reducer';
 
-export default class Auth extends Component {
+export class Auth extends Component {
   constructor(){
     super()
 
@@ -10,11 +12,15 @@ export default class Auth extends Component {
       username: '',
       password: ''
   }
+
 }
 
   login = () => {
     const {username, password} = this.state
-    axios.post('/api/auth/login', {username: username, password: password}).then( () => {
+    axios.post('/api/auth/login', {username: username, password: password}).then( (res) => {
+      const {username} = res.data[0]
+      this.props.updateUser({username: username})
+
       this.props.history.push("/dashboard")
     })
   }
@@ -41,3 +47,5 @@ export default class Auth extends Component {
     )
   }
 }
+
+export default connect(null, {updateUser})(Auth)

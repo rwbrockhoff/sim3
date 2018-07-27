@@ -11,8 +11,9 @@ module.exports = {
     login: (req, res, next) => {
         const dbInstance = req.app.get('db');
         let {username, password} = req.body;
-        dbInstance.login_user(username, password).then( (user) => {
-            res.status(200).send(user.username);
+        dbInstance.login_user(username, password).then( user => {
+            
+            res.status(200).send(user);
         })
     }
 }
