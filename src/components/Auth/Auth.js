@@ -18,8 +18,9 @@ export class Auth extends Component {
   login = () => {
     const {username, password} = this.state
     axios.post('/api/auth/login', {username: username, password: password}).then( (res) => {
-      const {username} = res.data[0]
-      this.props.updateUser({username: username})
+      
+      const {username, id} = res.data[0]
+      this.props.updateUser({username: username, userid: id})
 
       this.props.history.push("/dashboard")
     })
